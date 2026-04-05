@@ -1,0 +1,46 @@
+{
+  "name": "devrazec",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && next export",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write .",
+    "predeploy": "echo > out/.nojekyll && echo > out/_next/.nojekyll",
+    "deploy": "gh-pages -d out",
+    "clean-db": "node src/app/lib/db/clean_db.js",
+    "migrate": "node src/app/lib/db/migrate.js",
+    "seed_settings": "node src/app/lib/db/seed_settings.js"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@fontsource/roboto": "^5.2.9",
+    "@iconify/react": "^6.0.2",
+    "@mui/icons-material": "^7.3.7",
+    "@mui/material": "^7.3.7",
+    "@mui/x-data-grid": "^8.27.0",
+    "@mui/x-date-pickers": "^8.27.0",
+    "better-sqlite3": "^12.6.2",
+    "dayjs": "^1.11.19",
+    "next": "15.5.6",
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devrazec/devrazec.git"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "eslint": "^9",
+    "eslint-config-next": "15.5.6",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "gh-pages": "^6.3.0",
+    "prettier": "^3.8.1"
+  }
+}
