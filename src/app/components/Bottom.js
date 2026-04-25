@@ -57,7 +57,9 @@ export default function Bottom() {
   const pathname = usePathname();
   const router = useRouter();
   const scrollRef = useRef(null);
-  const foundIndex = menuItem.findIndex(({ href }) => href === pathname);
+  const foundIndex = menuItem.findIndex(({ href }) =>
+    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/")
+  );
   const activeIndex = foundIndex !== -1 ? foundIndex : 0;
 
   const scroll = (dir) => {
@@ -113,6 +115,7 @@ export default function Bottom() {
           value={activeIndex}
           onChange={(_, newValue) => router.push(menuItem[newValue].href)}
           sx={{
+            //height: 50,
             width: `${menuItem.length * 80}px`,
             "&::-webkit-scrollbar": { display: "none" },
             backgroundColor: "transparent",
@@ -133,15 +136,19 @@ export default function Bottom() {
                 "& .MuiSvgIcon-root": {
                   color: darkMode ? bottomFontDarkColor : bottomFontLightColor,
                 },
-                "&.Mui-selected": {
+                "&.Mui-selected, &.Mui-selected:hover": {
                   backgroundColor: darkMode
                     ? bottomActiveDarkColor
                     : bottomActiveLightColor,
                   color: darkMode
                     ? bottomActiveFontDarkColor
                     : bottomActiveFontLightColor,
+                  borderTop: `3px solid ${darkMode
+                    ? bottomActiveFontDarkColor
+                    : bottomActiveFontLightColor}`,
                   "& .MuiBottomNavigationAction-label": {
                     fontSize: bottomFontSize,
+                    opacity: 1,
                   },
                   "& .MuiSvgIcon-root": {
                     color: darkMode

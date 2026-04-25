@@ -49,9 +49,25 @@ export default function Left() {
     setMenuActiveFontDarkColor,
     menuActiveFontLightColor,
     setMenuActiveFontLightColor,
+    bottomFontDarkColor,
+    setBottomFontDarkColor,
+    bottomFontLightColor,
+    setBottomFontLightColor,
+    bottomFontSize,
+    setBottomFontSize,
+    bottomActiveDarkColor,
+    setBottomActiveDarkColor,
+    bottomActiveLightColor,
+    setBottomActiveLightColor,
+    bottomActiveFontDarkColor,
+    setBottomActiveFontDarkColor,
+    bottomActiveFontLightColor,
+    setBottomActiveFontLightColor,
     enableMenuItem, setEnableMenuItem,
     menuBackgroundImage,
     setMenuBackgroundImage,
+    menuBackgroundColor,
+    setMenuBackgroundColor,
 
     logoImage,
     setLogoImage,
@@ -185,7 +201,7 @@ export default function Left() {
               <ListItemButton
                 component={Link}
                 href={href}
-                selected={pathname === href}
+                selected={href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/")}
                 sx={{
                   color: darkMode ? menuFontDarkColor : menuFontLightColor,
                   "& .MuiListItemIcon-root": {
