@@ -9,7 +9,7 @@ export default function Loading() {
   const {
     darkMode,
     isLoading,
-    logoSelected,
+    logoImage,
     menuActiveDarkColor,
     menuActiveLightColor,
     menuActiveFontDarkColor,
@@ -70,7 +70,7 @@ export default function Loading() {
             }}
           >
             <Image
-              src={logoSelected}
+              src={logoImage}
               alt="INESCTEC Logo"
               width={30}
               height={30}

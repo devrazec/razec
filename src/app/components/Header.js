@@ -45,19 +45,25 @@ export default function Header() {
     setHeaderFontLightColor,
     headerFontSize,
     setHeaderFontSize,
-    headerBackgroundSelected,
-    setHeaderBackgroundSelected,
+    headerBackgroundImage,
+    setHeaderBackgroundImage,
+    headerBackgroundColor,
+    setHeaderBackgroundColor,
     enableHeaderTitle,
     setEnableHeaderTitle,
-    enableHeaderBackground,
-    setEnableHeaderBackground,
+    enableHeaderBackgroundImage,
+    setEnableHeaderBackgroundImage,
+    enableHeaderBackgroundColor,
+    setEnableHeaderBackgroundColor,
 
-    logoSelected,
-    setLogoSelected,
+    logoImage,
+    setLogoImage,
     logoSize,
     setLogoSize,
-    logoBackgroundSelected,
-    setLogoBackgroundSelected,
+    logoBackgroundImage,
+    setLogoBackgroundImage,
+    logoBackgroundColor,
+    setLogoBackgroundColor,
 
     logoTitle,
     setLogoTitle,
@@ -83,13 +89,15 @@ export default function Header() {
     setEnableLogoTitle,
     enableLogoSubTitle,
     setEnableLogoSubTitle,
-    enableLogoBackground,
-    setEnableLogoBackground,
+    enableLogoBackgroundImage,
+    setEnableLogoBackgroundImage,
+    enableLogoBackgroundColor,
+    setEnableLogoBackgroundColor,
 
-    enableMenuBackground,
-    setEnableMenuBackground,
-    enableBottomBackground,
-    setEnableBottomBackground,
+    enableMenuBackgroundImage,
+    setEnableMenuBackgroundImage,
+    enableBottomBackgroundImage,
+    setEnableBottomBackgroundImage,
   } = useContext(GlobalContext);
 
   const pathname = usePathname();
@@ -122,9 +130,10 @@ export default function Header() {
           padding: 0,
           height: 70,
           display: "flex",
-          backgroundImage: enableHeaderBackground
-            ? `url(${headerBackgroundSelected})`
+          backgroundImage: enableHeaderBackgroundImage
+            ? `url(${headerBackgroundImage})`
             : "none",
+          backgroundColor: enableHeaderBackgroundColor ? headerBackgroundColor : "transparent",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -136,9 +145,10 @@ export default function Header() {
               display: { xs: "flex", md: "none" },
               alignItems: "center",
               height: 70,
-              backgroundImage: enableLogoBackground
-                ? `url(${logoBackgroundSelected})`
+              backgroundImage: enableLogoBackgroundImage
+                ? `url(${logoBackgroundImage})`
                 : "none",
+              backgroundColor: enableLogoBackgroundColor ? logoBackgroundColor : "transparent",
               backgroundSize: "cover",
               backgroundPosition: "center",
               paddingY: 0,
@@ -148,8 +158,10 @@ export default function Header() {
             }}
           >
             <Image
-              src={logoSelected}
+              src={logoImage}
               alt="Logo"
+              //width={165}
+              //height={65}
               width={logoSize.width}
               height={logoSize.height}
               style={{ objectFit: "contain" }}
@@ -160,7 +172,7 @@ export default function Header() {
                   sx={{
                     fontSize: logoTitleSize,
                     fontWeight: "bold",
-                    color: darkMode ? logoTitleLightColor : logoTitleDarkColor,
+                    //color: darkMode ? logoTitleLightColor : logoTitleDarkColor,
                     lineHeight: 1.2,
                   }}
                 >
@@ -220,14 +232,14 @@ export default function Header() {
             )}
           </Box>
 
-          <IconButton
+          {/* <IconButton
             sx={{ color: darkMode ? headerFontLightColor : headerFontDarkColor }}
             onClick={() => router.push("/pages/Cart")}
           >
             <Badge badgeContent={dbProduct?.cartCount ?? 0} color="error" max={99}>
               <ShoppingCartIcon />
             </Badge>
-          </IconButton>
+          </IconButton> */}
 
           <IconButton
             sx={{

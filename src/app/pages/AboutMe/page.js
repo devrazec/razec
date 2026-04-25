@@ -5,7 +5,7 @@ import { GlobalContext } from "../../context/GlobalContext";
 import Layout from "../../components/Layout";
 import { useLoading } from "../../hooks/useLoading";
 
-export default function AccountPage() {
+export default function AboutMePage() {
   const {
     dbProduct,
     darkMode,
@@ -53,7 +53,7 @@ export default function AccountPage() {
           <h1 style={{ color: darkMode ? "#fff" : "#000" }}>Account</h1>
         </div>
         <div style={{ color: darkMode ? "#fff" : "#000" }}>
-          <p>Account page content goes here.</p>
+          <p>About Me Page.</p>
         </div>
       </div>
     </Layout>

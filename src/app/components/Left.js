@@ -50,15 +50,17 @@ export default function Left() {
     menuActiveFontLightColor,
     setMenuActiveFontLightColor,
     enableMenuItem, setEnableMenuItem,
-    menuBackgroundSelected,
-    setMenuBackgroundSelected,
+    menuBackgroundImage,
+    setMenuBackgroundImage,
 
-    logoSelected,
-    setLogoSelected,
+    logoImage,
+    setLogoImage,
     logoSize,
     setLogoSize,
-    logoBackgroundSelected,
-    setLogoBackgroundSelected,
+    logoBackgroundImage,
+    setLogoBackgroundImage,
+    logoBackgroundColor,
+    setLogoBackgroundColor,
 
     logoTitle,
     setLogoTitle,
@@ -84,15 +86,17 @@ export default function Left() {
     setEnableLogoTitle,
     enableLogoSubTitle,
     setEnableLogoSubTitle,
-    enableLogoBackground,
-    setEnableLogoBackground,
+    enableLogoBackgroundImage,
+    setEnableLogoBackgroundImage,
+    enableLogoBackgroundColor,
+    setEnableLogoBackgroundColor,
 
-    enableMenuBackground,
-    setEnableMenuBackground,
-    enableBottomBackground,
-    setEnableBottomBackground,
-    enableHeaderBackground,
-    setEnableHeaderBackground,
+    enableMenuBackgroundImage,
+    setEnableMenuBackgroundImage,
+    enableBottomBackgroundImage,
+    setEnableBottomBackgroundImage,
+    enableMenuBackgroundColor,
+    setEnableMenuBackgroundColor,
   } = useContext(GlobalContext);
 
   const pathname = usePathname();
@@ -109,10 +113,10 @@ export default function Left() {
           boxSizing: "border-box",
           zIndex: (theme) => theme.zIndex.drawer,
           overflowX: "hidden",
-          backgroundImage: enableMenuBackground
-            ? `url(${menuBackgroundSelected})`
+          backgroundImage: enableMenuBackgroundImage
+            ? `url(${menuBackgroundImage})`
             : "none",
-          backgroundSize: "cover",
+          backgroundColor: enableMenuBackgroundColor ? menuBackgroundColor : "transparent",
           backgroundPosition: "center",
         },
       }}
@@ -124,20 +128,24 @@ export default function Left() {
           alignItems: "center",
           width: DRAWER_WIDTH,
           height: 70,
-          backgroundImage: enableLogoBackground
-            ? `url(${logoBackgroundSelected})`
+          backgroundImage: enableLogoBackgroundImage
+            ? `url(${logoBackgroundImage})`
             : "none",
+          backgroundColor: enableLogoBackgroundColor ? logoBackgroundColor : "transparent",
           backgroundSize: "cover",
           backgroundPosition: "center",
           paddingY: 0,
+          //paddingTop: 2,
           paddingRight: 2,
           paddingLeft: 1,
         }}
       >
         {enableLogo && (
           <Image
-            src={logoSelected}
+            src={logoImage}
             alt="Logo"
+            //width={200}
+            //height={79}
             width={logoSize.width}
             height={logoSize.height}
             style={{ objectFit: "contain" }}
@@ -149,7 +157,7 @@ export default function Left() {
               sx={{
                 fontSize: logoTitleSize,
                 fontWeight: "bold",
-                color: darkMode ? logoTitleLightColor : logoTitleDarkColor,
+                //color: darkMode ? logoTitleLightColor : logoTitleDarkColor,
                 lineHeight: 1.2,
               }}
             >

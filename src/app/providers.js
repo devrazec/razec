@@ -23,7 +23,7 @@ export default function Providers({ children }) {
       createTheme({
         palette: {
           mode: 'light',
-          primary: { main: '#008bc1' },
+          primary: { main: '#24b9ef' },
         },
       }),
     []
@@ -33,7 +33,7 @@ export default function Providers({ children }) {
       createTheme({
         palette: {
           mode: 'dark',
-          primary: { main: '#008bc1' },
+          primary: { main: '#24b9ef' },
         },
       }),
     []
