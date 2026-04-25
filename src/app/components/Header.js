@@ -172,7 +172,7 @@ export default function Header() {
                   sx={{
                     fontSize: logoTitleSize,
                     fontWeight: "bold",
-                    //color: darkMode ? logoTitleLightColor : logoTitleDarkColor,
+                    color: darkMode ? logoTitleLightColor : logoTitleDarkColor,
                     lineHeight: 1.2,
                   }}
                 >

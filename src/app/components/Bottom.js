@@ -143,9 +143,6 @@ export default function Bottom() {
                   color: darkMode
                     ? bottomActiveFontDarkColor
                     : bottomActiveFontLightColor,
-                  borderTop: `3px solid ${darkMode
-                    ? bottomActiveFontDarkColor
-                    : bottomActiveFontLightColor}`,
                   "& .MuiBottomNavigationAction-label": {
                     fontSize: bottomFontSize,
                     opacity: 1,
