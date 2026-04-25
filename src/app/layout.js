@@ -4,7 +4,7 @@ import Loading from './components/Loading';
 import Providers from './providers';
 
 export const metadata = {
-  title: 'Template',
+  title: 'Razec',
   icons: {
     icon: '/favicon.ico',
   },

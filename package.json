@@ -1,5 +1,5 @@
 {
-  "name": "devrazec",
+  "name": "razec",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devrazec/devrazec.git"
+    "url": "git+https://github.com/devrazec/razec.git"
   },
   "devDependencies": {
     "gh-pages": "^6.3.0"

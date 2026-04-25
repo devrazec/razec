@@ -5,17 +5,18 @@
 npx create-next-app@15 .
 
 ✔ Would you like to use TypeScript? … No
-✔ Which linter would you like to use? › ESLint … Yes
+✔ Which linter would you like to use? › None
 ✔ Would you like to use Tailwind CSS? … No
 ✔ Would you like your code inside a `src/` directory? … Yes
 ✔ Would you like to use App Router? (recommended) … Yes
 ✔ Would you like to use Turbopack? (recommended) … No
-✔ Would you like to customize the import alias (`@/*` by default)? … Yes
+? Would you like to customize the import alias (`@/*` by default)? › No
 
--- Install Packages
-npm i -D prettier eslint-config-prettier eslint-plugin-prettier
-npm i -S @iconify/react
-npm i -S better-sqlite3
+-- Components
+
+npm i -S @mui/material @emotion/react @emotion/styled
+npm i -S @fontsource/roboto
+npm i -S @mui/icons-material @mui/x-data-grid
 npm i -D gh-pages
 
 -- Copy files to /src/app folder
@@ -28,21 +29,13 @@ CNAME
 
 -- Copy files to root / folder
 .env.local
-.eslintrc.json
-.prettierrc
-.prettierignore
+next.config.mjs
 
 -- Copy files to /src/app/context
 
--- Delete file
-next.config.mjs
-
 -- Run commands
 
-npm run format
-npm run lint
 npm run build
-npm run deploy
 
 -- Create Files
 
@@ -53,20 +46,17 @@ gh-pages/_next/.nojekyll
 npm run predeploy
 npm run deploy
 
--- Material UI
-
-npm i -S @fontsource/roboto
-npm i -S @mui/material @emotion/react @emotion/styled @mui/icons-material
-npm i -S @mui/x-date-pickers dayjs @mui/x-data-grid
-
--- Database Create Table
-
-npm run clean-db
-npm run migrate
-
 ```
 
 # Domain Management
+
+https://controlpanel.amen.pt/domains/dns.html
+
+razec.pt A 	185.199.111.153
+razec.pt A 	185.199.110.153 
+razec.pt A 	185.199.109.153
+razec.pt A 	185.199.108.153
+www.razec.pt CNAME 	devrazec.github.io
 
 # Demo
 
