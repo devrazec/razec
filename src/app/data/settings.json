@@ -27,7 +27,7 @@
   "enableHeaderTitle": false,
   "enableHeaderBackgroundImage": false,
   "enableHeaderBackgroundColor": true,
-  "bottomFontSize": 13,
+  "bottomFontSize": 12,
   "bottomFontDarkColor": "#cce0f5",
   "bottomFontLightColor": "#2e5f8a",
   "bottomActiveDarkColor": "#2e6da4",

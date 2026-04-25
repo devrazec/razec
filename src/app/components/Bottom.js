@@ -3,7 +3,8 @@
 import { useContext, useRef, useEffect, useState } from "react";
 import { GlobalContext } from "../context/GlobalContext";
 
-import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Paper from "@mui/material/Paper";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -55,7 +56,6 @@ export default function Bottom() {
   } = useContext(GlobalContext);
 
   const pathname = usePathname();
-  const router = useRouter();
   const scrollRef = useRef(null);
   const foundIndex = menuItem.findIndex(({ href }) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/")
@@ -113,7 +113,6 @@ export default function Bottom() {
         <BottomNavigation
           showLabels
           value={activeIndex}
-          onChange={(_, newValue) => router.push(menuItem[newValue].href)}
           sx={{
             //height: 50,
             width: `${menuItem.length * 80}px`,
@@ -121,9 +120,11 @@ export default function Bottom() {
             backgroundColor: "transparent",
           }}
         >
-          {enableBottomItem && menuItem.map(({ text, icon }) => (
+          {enableBottomItem && menuItem.map(({ text, icon, href }) => (
             <BottomNavigationAction
               key={text}
+              component={Link}
+              href={href}
               label={text}
               icon={icon}
               sx={{

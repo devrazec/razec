@@ -114,9 +114,9 @@ export default function Header() {
       position="fixed"
       elevation={0}
       style={{
-        //backgroundColor: enableHeaderBackground ? "transparent" : "rgba(0,0,0,0.15)",
-        //backdropFilter: enableHeaderBackground ? "none" : "blur(12px)",
-        //WebkitBackdropFilter: enableHeaderBackground ? "none" : "blur(12px)",
+        //backgroundColor: enableHeaderBackgroundColor ? "transparent" : "rgba(0,0,0,0.15)",
+        //backdropFilter: enableHeaderBackgroundColor ? "none" : "blur(12px)",
+        //WebkitBackdropFilter: enableHeaderBackgroundColor ? "none" : "blur(12px)",
       }}
       sx={{
         zIndex: (theme) => theme.zIndex.drawer,
