@@ -19,6 +19,9 @@ npm i -S @fontsource/roboto
 npm i -S @mui/icons-material @mui/x-data-grid
 npm i -D gh-pages
 
+npm i -S three @react-three/fiber
+npm i -S @react-three/drei
+
 -- Copy files to /src/app folder
 not-found.js
 
@@ -60,13 +63,13 @@ www.razec.pt CNAME 	devrazec.github.io
 
 # Demo
 
-https://devrazec.github.io/devrazec
+https://devrazec.github.io/razec
 
-https://devrazec.com/
+https://razec.pt/
 
 # Project
 
-https://github.com/devrazec/devrazec
+https://github.com/devrazec/razec
 
 # Links
 

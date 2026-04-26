@@ -19,6 +19,13 @@ export function GlobalProvider({ children }) {
   const [darkMode, setDarkMode] = useState(false);
   const [mobileDevice, setMobileDevice] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  
+  const [lang, setLang] = useState("en");
+  const [activeExp, setActiveExp] = useState(0);
+  const sectionSx = {
+    py: { xs: 7, md: 10 },
+    px: { xs: 2, md: 0 },
+  };
 
   const [dbSettings, setDbSettings] = useState(jsonSettings);
 
@@ -47,6 +54,8 @@ export function GlobalProvider({ children }) {
       icon: <CollectionsOutlinedIcon />,
       href: "/pages/Portfolio",
     },
+    { text: "Curriculum", icon: <MenuBookIcon />, href: "/pages/Curriculum" },
+
     { text: "Contact", icon: <EmailOutlinedIcon />, href: "/pages/Contact" },
   ]);
 
@@ -204,6 +213,12 @@ export function GlobalProvider({ children }) {
         setMobileDevice,
         isLoading,
         setIsLoading,
+        
+        lang,
+        setLang,
+        activeExp,
+        setActiveExp,
+        sectionSx,
 
         dbSettings,
         setDbSettings,
