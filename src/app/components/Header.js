@@ -36,6 +36,8 @@ export default function Header() {
     setSelectedRange,
     menuItem,
     setMenuItem,
+    lang,
+    setLang,
 
     headerTitle,
     setHeaderTitle,
@@ -240,6 +242,30 @@ export default function Header() {
               <ShoppingCartIcon />
             </Badge>
           </IconButton> */}
+
+          <Button
+            onClick={() => setLang((l) => (l === "en" ? "pt" : "en"))}
+            variant="outlined"
+            size="small"
+            sx={{
+              color: darkMode ? headerFontLightColor : headerFontDarkColor,
+              borderColor: darkMode ? headerFontLightColor : headerFontDarkColor,
+              fontFamily: "'DM Mono',monospace",
+              fontWeight: 600,
+              letterSpacing: 1,
+              borderRadius: 2,
+              px: 1.5,
+              py: 0.5,
+              minWidth: 'auto',
+              mr: 1,
+              "&:hover": {
+                borderColor: darkMode ? headerFontLightColor : headerFontDarkColor,
+                bgcolor: darkMode ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.04)',
+              },
+            }}
+          >
+            {lang === "en" ? "PT" : "EN"}
+          </Button>
 
           <IconButton
             sx={{

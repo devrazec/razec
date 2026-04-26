@@ -28,6 +28,7 @@ export default function Bottom() {
     setSelectedRange,
     menuItem,
     setMenuItem,
+    activeSection,
 
     bottomFontDarkColor,
     setBottomFontDarkColor,
@@ -57,10 +58,19 @@ export default function Bottom() {
 
   const pathname = usePathname();
   const scrollRef = useRef(null);
-  const foundIndex = menuItem.findIndex(({ href }) =>
-    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/")
-  );
-  const activeIndex = foundIndex !== -1 ? foundIndex : 0;
+  const [activeIndex, setActiveIndex] = useState(0);
+  
+  useEffect(() => {
+    const foundIndex = menuItem.findIndex(({ href }) => {
+      if (href.startsWith("#")) {
+        return href === `#${activeSection}`;
+      }
+      return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
+    });
+    if (foundIndex !== -1) {
+      setActiveIndex(foundIndex);
+    }
+  }, [pathname, menuItem, activeSection]);
 
   const scroll = (dir) => {
     scrollRef.current?.scrollBy({ left: dir * 150, behavior: "smooth" });
@@ -120,13 +130,23 @@ export default function Bottom() {
             backgroundColor: "transparent",
           }}
         >
-          {enableBottomItem && menuItem.map(({ text, icon, href }) => (
+          {enableBottomItem && menuItem.map(({ text, icon, href }, index) => (
             <BottomNavigationAction
               key={text}
-              component={Link}
+              component={href.startsWith("#") ? "a" : Link}
               href={href}
               label={text}
               icon={icon}
+              onClick={(e) => {
+                if (href.startsWith("#")) {
+                  e.preventDefault();
+                  const element = document.querySelector(href);
+                  if (element) {
+                    element.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }
+                  setActiveIndex(index);
+                }
+              }}
               sx={{
                 minWidth: 72,
                 flexShrink: 0,

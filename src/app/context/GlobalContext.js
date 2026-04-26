@@ -22,6 +22,7 @@ export function GlobalProvider({ children }) {
   
   const [lang, setLang] = useState("en");
   const [activeExp, setActiveExp] = useState(0);
+  const [activeSection, setActiveSection] = useState("about");
   const sectionSx = {
     py: { xs: 7, md: 10 },
     px: { xs: 2, md: 0 },
@@ -30,33 +31,13 @@ export function GlobalProvider({ children }) {
   const [dbSettings, setDbSettings] = useState(jsonSettings);
 
   const [menuItem, setMenuItem] = useState([
-    { text: "Home", icon: <HomeIcon />, href: "/" },
-    {
-      text: "About Me",
-      icon: <AccountCircleOutlinedIcon />,
-      href: "/pages/AboutMe",
-    },
-    {
-      text: "Experience",
-      icon: <WorkOutlinedIcon />,
-      href: "/pages/Experience",
-    },
-    {
-      text: "Academic",
-      icon: <MenuBookIcon />,
-      href: "/pages/Academic",
-    },
-    { text: "Courses", icon: <SchoolOutlinedIcon />, href: "/pages/Courses" },
-
-    { text: "Projects", icon: <FolderOutlinedIcon />, href: "/pages/Projects" },
-    {
-      text: "Portfolio",
-      icon: <CollectionsOutlinedIcon />,
-      href: "/pages/Portfolio",
-    },
-    { text: "Curriculum", icon: <MenuBookIcon />, href: "/pages/Curriculum" },
-
-    { text: "Contact", icon: <EmailOutlinedIcon />, href: "/pages/Contact" },
+    { text: "About", icon: <AccountCircleOutlinedIcon />, href: "#about" },
+    { text: "Skills", icon: <MenuBookIcon />, href: "#skills" },
+    { text: "Experience", icon: <WorkOutlinedIcon />, href: "#experience" },
+    { text: "Projects", icon: <FolderOutlinedIcon />, href: "#projects" },
+    { text: "Education", icon: <SchoolOutlinedIcon />, href: "#education" },
+    { text: "Articles", icon: <CollectionsOutlinedIcon />, href: "#articles" },
+    { text: "Contact", icon: <EmailOutlinedIcon />, href: "#contact" },
   ]);
 
   const [headerTitle, setHeaderTitle] = useState(jsonSettings.headerTitle);
@@ -218,6 +199,8 @@ export function GlobalProvider({ children }) {
         setLang,
         activeExp,
         setActiveExp,
+        activeSection,
+        setActiveSection,
         sectionSx,
 
         dbSettings,

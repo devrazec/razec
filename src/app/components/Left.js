@@ -34,6 +34,7 @@ export default function Left() {
     setSelectedRange,
     menuItem,
     setMenuItem,
+    activeSection,
 
     menuFontDarkColor,
     setMenuFontDarkColor,
@@ -199,9 +200,18 @@ export default function Left() {
           {menuItem.map(({ text, icon, href }) => (
             <ListItem key={text} disablePadding>
               <ListItemButton
-                component={Link}
+                component={href.startsWith("#") ? "a" : Link}
                 href={href}
-                selected={href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/")}
+                selected={href.startsWith("#") ? href === `#${activeSection}` : (href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/"))}
+                onClick={(e) => {
+                  if (href.startsWith("#")) {
+                    e.preventDefault();
+                    const element = document.querySelector(href);
+                    if (element) {
+                      element.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                  }
+                }}
                 sx={{
                   color: darkMode ? menuFontDarkColor : menuFontLightColor,
                   "& .MuiListItemIcon-root": {

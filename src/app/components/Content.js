@@ -336,6 +336,7 @@ const experienceData = [
 const projectsData = [
   {
     name: "Fluentor",
+    year: "2024",
     desc: {
       en: "AI-powered English pronunciation practice app integrating Azure Speech Services and Generative AI.",
       pt: "Aplicação de prática de pronúncia em inglês com IA, integrando Azure Speech Services e IA Generativa.",
@@ -354,6 +355,7 @@ const projectsData = [
   },
   {
     name: "Robotic Process Automation",
+    year: "2023",
     desc: {
       en: "Web-based RPA platform for automating browser tasks with real-time process monitoring via Socket.io.",
       pt: "Plataforma RPA web para automatização de tarefas de browser com monitorização em tempo real via Socket.io.",
@@ -364,6 +366,7 @@ const projectsData = [
   },
   {
     name: "Zeladoria Urbana",
+    year: "2023",
     desc: {
       en: "Civic reporting platform with Google Geolocation, allowing residents to flag urban maintenance issues.",
       pt: "Plataforma de reporte cívico com Google Geolocalização para registo de ocorrências urbanas.",
@@ -374,6 +377,7 @@ const projectsData = [
   },
   {
     name: "Book Store",
+    year: "2022",
     desc: {
       en: "Full-stack Laravel + React app with Docker deployment, authentication and SQLite persistence.",
       pt: "Aplicação full-stack Laravel + React com Docker, autenticação e persistência SQLite.",
@@ -384,6 +388,7 @@ const projectsData = [
   },
   {
     name: "Amazon Clone",
+    year: "2022",
     desc: {
       en: "Full-stack e-commerce prototype built with Next.js and Material UI, demonstrating modern React patterns.",
       pt: "Protótipo de e-commerce full-stack com Next.js e Material UI, demonstrando padrões modernos de React.",
@@ -394,6 +399,7 @@ const projectsData = [
   },
   {
     name: "Interactive Maps",
+    year: "2021",
     desc: {
       en: "React/Leaflet application for rendering and interacting with dynamic geographic data.",
       pt: "Aplicação React/Leaflet para visualização e interação com dados geográficos dinâmicos.",
@@ -553,8 +559,38 @@ function TechChip({ label }) {
 }
 
 export default function Content({ children }) {
-  const { lang, setLang, activeExp, setActiveExp, sectionSx } = useContext(GlobalContext);
+  const { lang, setLang, activeExp, setActiveExp, sectionSx, setActiveSection } = useContext(GlobalContext);
   const t = content[lang];
+  const scrollContainerRef = useRef(null);
+  
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    const sections = scrollContainer.querySelectorAll('[id^="#"]');
+    const sectionElements = Array.from(scrollContainer.querySelectorAll('#about, #skills, #experience, #projects, #education, #articles, #contact'));
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { 
+        root: scrollContainer,
+        threshold: [0.3], 
+        rootMargin: '-80px 0px -40% 0px' 
+      }
+    );
+
+    sectionElements.forEach((section) => {
+      if (section) observer.observe(section);
+    });
+
+    return () => observer.disconnect();
+  }, [setActiveSection]);
 
   const altBg = {
     background: `linear-gradient(160deg, ${alpha(ACCENT, 0.03)} 0%, ${alpha(ACCENT2, 0.06)} 100%)`,
@@ -576,6 +612,7 @@ export default function Content({ children }) {
         <Box sx={{ flexGrow: 1, minHeight: 0 }}>{children}</Box>
       ) : (
         <Box
+          ref={scrollContainerRef}
           sx={{
             flexGrow: 1,
             overflowY: "auto",
@@ -590,29 +627,6 @@ export default function Content({ children }) {
               overflowX: "hidden",
             }}
           >
-            {/* ── Language Toggle ─────────────────────────────────────────────── */}
-            <Box sx={{ position: "fixed", top: 20, right: 24, zIndex: 1200 }}>
-              <Button
-                onClick={() => setLang((l) => (l === "en" ? "pt" : "en"))}
-                variant="contained"
-                size="small"
-                sx={{
-                  bgcolor: ACCENT,
-                  color: "#fff",
-                  fontFamily: "'DM Mono',monospace",
-                  fontWeight: 600,
-                  letterSpacing: 1,
-                  borderRadius: 8,
-                  px: 2.5,
-                  py: 0.8,
-                  boxShadow: "0 4px 16px rgba(31,78,121,0.3)",
-                  "&:hover": { bgcolor: ACCENT2 },
-                }}
-              >
-                {t.lang}
-              </Button>
-            </Box>
-
             {/* ── HERO ────────────────────────────────────────────────────────── */}
             <Box
               id="about"
@@ -836,79 +850,76 @@ export default function Content({ children }) {
             {/* ── ABOUT ──────────────────────────────────────────────────────── */}
             <Box sx={{ ...sectionSx, bgcolor: "#fff" }}>
               <Container maxWidth="lg">
-                <Grid container spacing={6} alignItems="center">
-                  <Grid item xs={12} md={5}>
-                    <SectionTitle>{t.about.title}</SectionTitle>
-                    <Typography
-                      sx={{
-                        color: "text.secondary",
-                        lineHeight: 1.9,
-                        fontSize: "1.05rem",
-                      }}
-                    >
-                      {t.about.body}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} md={7}>
-                    <Grid container spacing={2}>
-                      {[
-                        {
-                          label: "Years",
-                          value: "15+",
-                          sub: { en: "Experience", pt: "Experiência" }[lang],
-                        },
-                        {
-                          label: "Countries",
-                          value: "4",
-                          sub: { en: "Worked in", pt: "Países" }[lang],
-                        },
-                        {
-                          label: "Stack",
-                          value: "20+",
-                          sub: { en: "Technologies", pt: "Tecnologias" }[lang],
-                        },
-                        {
-                          label: "ECTS",
-                          value: "270+",
-                          sub: {
-                            en: "Academic Credits",
-                            pt: "Créditos Académicos",
-                          }[lang],
-                        },
-                      ].map((s) => (
-                        <Grid item xs={6} key={s.label}>
-                          <Card
-                            sx={{
-                              p: 3,
-                              textAlign: "center",
-                              background: `linear-gradient(135deg,${alpha(ACCENT, 0.03)},${alpha(ACCENT2, 0.07)})`,
-                            }}
-                          >
-                            <Typography
-                              sx={{
-                                fontFamily: "'Playfair Display',serif",
-                                fontSize: "3rem",
-                                fontWeight: 800,
-                                color: ACCENT,
-                                lineHeight: 1,
-                              }}
-                            >
-                              {s.value}
-                            </Typography>
-                            <Typography
-                              sx={{
-                                color: "text.secondary",
-                                fontSize: "0.85rem",
-                                mt: 0.5,
-                              }}
-                            >
-                              {s.sub}
-                            </Typography>
-                          </Card>
-                        </Grid>
-                      ))}
+                <SectionTitle>{t.about.title}</SectionTitle>
+                <Typography
+                  sx={{
+                    color: "text.secondary",
+                    lineHeight: 1.9,
+                    fontSize: "1.05rem",
+                    mb: 4,
+                    maxWidth: "800px",
+                  }}
+                >
+                  {t.about.body}
+                </Typography>
+                <Grid container spacing={2}>
+                  {[
+                    {
+                      label: "Years",
+                      value: "15+",
+                      sub: { en: "Experience", pt: "Experiência" }[lang],
+                    },
+                    {
+                      label: "Countries",
+                      value: "4",
+                      sub: { en: "Worked in", pt: "Países" }[lang],
+                    },
+                    {
+                      label: "Stack",
+                      value: "20+",
+                      sub: { en: "Technologies", pt: "Tecnologias" }[lang],
+                    },
+                    {
+                      label: "ECTS",
+                      value: "270+",
+                      sub: {
+                        en: "Academic Credits",
+                        pt: "Créditos Académicos",
+                      }[lang],
+                    },
+                  ].map((s) => (
+                    <Grid item xs={12} sm={6} md={3} key={s.label}>
+                      <Card
+                        sx={{
+                          p: 3,
+                          height: "100%",
+                          textAlign: "center",
+                          background: `linear-gradient(135deg,${alpha(ACCENT, 0.03)},${alpha(ACCENT2, 0.07)})`,
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            fontFamily: "'Playfair Display',serif",
+                            fontSize: "3rem",
+                            fontWeight: 800,
+                            color: ACCENT,
+                            lineHeight: 1,
+                          }}
+                        >
+                          {s.value}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            color: "text.secondary",
+                            fontSize: "0.85rem",
+                            mt: 0.5,
+                          }}
+                        >
+                          {s.sub}
+                        </Typography>
+                      </Card>
                     </Grid>
-                  </Grid>
+                  ))}
                 </Grid>
               </Container>
             </Box>
@@ -917,31 +928,29 @@ export default function Content({ children }) {
             <Box id="skills" sx={{ ...sectionSx, ...altBg }}>
               <Container maxWidth="lg">
                 <SectionTitle>{t.skills.title}</SectionTitle>
-                <Grid container spacing={3}>
+                <Stack spacing={3}>
                   {skillsData.map((cat) => (
-                    <Grid item xs={12} sm={6} md={4} key={cat.category}>
-                      <Card sx={{ p: 3, height: "100%" }}>
-                        <Typography
-                          sx={{
-                            fontFamily: "'DM Mono',monospace",
-                            fontSize: "0.7rem",
-                            letterSpacing: 2,
-                            color: GOLD,
-                            textTransform: "uppercase",
-                            mb: 1.5,
-                          }}
-                        >
-                          {cat.category}
-                        </Typography>
-                        <Stack direction="row" flexWrap="wrap" gap={1}>
-                          {cat.items.map((item) => (
-                            <TechChip key={item} label={item} />
-                          ))}
-                        </Stack>
-                      </Card>
-                    </Grid>
+                    <Card key={cat.category} sx={{ p: 3, height: "100%" }}>
+                      <Typography
+                        sx={{
+                          fontFamily: "'DM Mono',monospace",
+                          fontSize: "0.7rem",
+                          letterSpacing: 2,
+                          color: GOLD,
+                          textTransform: "uppercase",
+                          mb: 1.5,
+                        }}
+                      >
+                        {cat.category}
+                      </Typography>
+                      <Stack direction="row" flexWrap="wrap" gap={1}>
+                        {cat.items.map((item) => (
+                          <TechChip key={item} label={item} />
+                        ))}
+                      </Stack>
+                    </Card>
                   ))}
-                </Grid>
+                </Stack>
               </Container>
             </Box>
 
@@ -949,158 +958,90 @@ export default function Content({ children }) {
             <Box id="experience" sx={{ ...sectionSx, bgcolor: "#fff" }}>
               <Container maxWidth="lg">
                 <SectionTitle>{t.experience.title}</SectionTitle>
-                <Grid container spacing={4}>
-                  {/* Tabs */}
-                  <Grid item xs={12} md={3}>
-                    <Stack spacing={1}>
-                      {experienceData.map((exp, i) => (
-                        <Box
-                          key={i}
-                          onClick={() => setActiveExp(i)}
-                          sx={{
-                            p: 2,
-                            borderRadius: 2,
-                            cursor: "pointer",
-                            borderLeft: `3px solid ${activeExp === i ? GOLD : "transparent"}`,
-                            bgcolor:
-                              activeExp === i
-                                ? alpha(ACCENT, 0.05)
-                                : "transparent",
-                            transition: "all 0.2s ease",
-                            "&:hover": { bgcolor: alpha(ACCENT, 0.04) },
-                          }}
-                        >
+                <Stack spacing={3}>
+                  {experienceData.map((exp, i) => (
+                    <Card key={i} sx={{ p: 3, height: "100%" }}>
+                      <Grid container spacing={2} alignItems="flex-start">
+                        <Grid item xs={12} sm={3}>
                           <Typography
                             sx={{
-                              fontWeight: 600,
-                              fontSize: "0.9rem",
-                              color: activeExp === i ? ACCENT : "text.primary",
-                            }}
-                          >
-                            {exp.company}
-                          </Typography>
-                          <Typography
-                            sx={{
-                              fontSize: "0.75rem",
-                              color: "text.secondary",
                               fontFamily: "'DM Mono',monospace",
+                              fontSize: "0.8rem",
+                              color: GOLD,
+                              fontWeight: 600,
                             }}
                           >
                             {exp.period[lang]}
                           </Typography>
-                        </Box>
-                      ))}
-                    </Stack>
-                  </Grid>
-
-                  {/* Content */}
-                  <Grid item xs={12} md={9}>
-                    {experienceData[activeExp] &&
-                      (() => {
-                        const exp = experienceData[activeExp];
-                        return (
-                          <Card sx={{ p: 4 }}>
-                            <Box
-                              sx={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                flexWrap: "wrap",
-                                gap: 1,
-                                mb: 3,
-                              }}
-                            >
-                              <Box>
-                                <Typography
-                                  variant="h4"
-                                  sx={{ color: ACCENT, fontSize: "1.3rem" }}
-                                >
-                                  {exp.title[lang]}
-                                </Typography>
+                          <Typography
+                            sx={{
+                              fontSize: "0.82rem",
+                              color: "text.secondary",
+                              mt: 0.5,
+                            }}
+                          >
+                            {exp.location}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={12} sm={9}>
+                          <Typography
+                            variant="h6"
+                            sx={{ color: ACCENT, fontSize: "1rem", mb: 0.5 }}
+                          >
+                            {exp.title[lang]}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              fontWeight: 600,
+                              color: "text.secondary",
+                              fontSize: "0.9rem",
+                              mb: 2,
+                            }}
+                          >
+                            {exp.company}
+                          </Typography>
+                          <Stack spacing={1} sx={{ mb: 2 }}>
+                            {exp.bullets[lang].map((b, idx) => (
+                              <Box
+                                key={idx}
+                                sx={{
+                                  display: "flex",
+                                  gap: 1.5,
+                                  alignItems: "flex-start",
+                                }}
+                              >
+                                <Box
+                                  sx={{
+                                    width: 6,
+                                    height: 6,
+                                    borderRadius: "50%",
+                                    bgcolor: GOLD,
+                                    mt: "7px",
+                                    flexShrink: 0,
+                                  }}
+                                />
                                 <Typography
                                   sx={{
                                     color: "text.secondary",
-                                    fontWeight: 500,
+                                    lineHeight: 1.7,
+                                    fontSize: "0.85rem",
                                   }}
                                 >
-                                  {exp.company} · {exp.location}
+                                  {b}
                                 </Typography>
                               </Box>
-                              <Chip
-                                label={exp.period[lang]}
-                                size="small"
-                                sx={{
-                                  bgcolor: alpha(GOLD, 0.1),
-                                  color: "#8B6914",
-                                  fontFamily: "'DM Mono',monospace",
-                                  fontWeight: 600,
-                                }}
-                              />
-                            </Box>
-                            <Typography
-                              sx={{
-                                fontWeight: 700,
-                                fontSize: "0.75rem",
-                                letterSpacing: 2,
-                                color: LIGHT,
-                                textTransform: "uppercase",
-                                mb: 1.5,
-                              }}
-                            >
-                              {t.experience.responsibilities}
-                            </Typography>
-                            <Stack spacing={1} sx={{ mb: 3 }}>
-                              {exp.bullets[lang].map((b, i) => (
-                                <Box
-                                  key={i}
-                                  sx={{
-                                    display: "flex",
-                                    gap: 1.5,
-                                    alignItems: "flex-start",
-                                  }}
-                                >
-                                  <Box
-                                    sx={{
-                                      width: 6,
-                                      height: 6,
-                                      borderRadius: "50%",
-                                      bgcolor: GOLD,
-                                      mt: "7px",
-                                      flexShrink: 0,
-                                    }}
-                                  />
-                                  <Typography
-                                    sx={{
-                                      color: "text.secondary",
-                                      lineHeight: 1.7,
-                                    }}
-                                  >
-                                    {b}
-                                  </Typography>
-                                </Box>
-                              ))}
-                            </Stack>
-                            <Typography
-                              sx={{
-                                fontWeight: 700,
-                                fontSize: "0.75rem",
-                                letterSpacing: 2,
-                                color: LIGHT,
-                                textTransform: "uppercase",
-                                mb: 1.5,
-                              }}
-                            >
-                              {t.experience.tech}
-                            </Typography>
-                            <Stack direction="row" flexWrap="wrap" gap={1}>
-                              {exp.tech.map((tech) => (
-                                <TechChip key={tech} label={tech} />
-                              ))}
-                            </Stack>
-                          </Card>
-                        );
-                      })()}
-                  </Grid>
-                </Grid>
+                            ))}
+                          </Stack>
+                          <Stack direction="row" flexWrap="wrap" gap={0.8}>
+                            {exp.tech.map((tech) => (
+                              <TechChip key={tech} label={tech} />
+                            ))}
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Card>
+                  ))}
+                </Stack>
               </Container>
             </Box>
 
@@ -1108,96 +1049,110 @@ export default function Content({ children }) {
             <Box id="projects" sx={{ ...sectionSx, ...altBg }}>
               <Container maxWidth="lg">
                 <SectionTitle>{t.projects.title}</SectionTitle>
-                <Grid container spacing={3}>
-                  {projectsData.map((proj) => (
-                    <Grid item xs={12} sm={6} md={4} key={proj.name}>
-                      <Card
-                        sx={{
-                          p: 3,
-                          height: "100%",
-                          display: "flex",
-                          flexDirection: "column",
-                          ...(proj.highlight && {
-                            border: `1px solid ${alpha(GOLD, 0.4)}`,
-                            background: `linear-gradient(135deg,#fff,${alpha(GOLD, 0.04)})`,
-                          }),
-                        }}
-                      >
-                        {proj.highlight && (
-                          <Chip
-                            label="Featured"
-                            size="small"
+                <Stack spacing={3}>
+                  {projectsData.map((proj, i) => (
+                    <Card
+                      key={i}
+                      sx={{
+                        p: 3,
+                        height: "100%",
+                        ...(proj.highlight && {
+                          border: `1px solid ${alpha(GOLD, 0.4)}`,
+                          background: `linear-gradient(135deg,#fff,${alpha(GOLD, 0.04)})`,
+                        }),
+                      }}
+                    >
+                      <Grid container spacing={2} alignItems="flex-start">
+                        <Grid item xs={12} sm={3}>
+                          <Typography
                             sx={{
-                              alignSelf: "flex-start",
-                              mb: 1.5,
-                              bgcolor: alpha(GOLD, 0.15),
-                              color: "#8B6914",
-                              fontWeight: 700,
+                              fontFamily: "'DM Mono',monospace",
+                              fontSize: "0.8rem",
+                              color: GOLD,
+                              fontWeight: 600,
                             }}
-                          />
-                        )}
-                        <Typography variant="h6" sx={{ color: ACCENT, mb: 1 }}>
-                          {proj.name}
-                        </Typography>
-                        <Typography
-                          sx={{
-                            color: "text.secondary",
-                            fontSize: "0.9rem",
-                            lineHeight: 1.7,
-                            flex: 1,
-                            mb: 2,
-                          }}
-                        >
-                          {proj.desc[lang]}
-                        </Typography>
-                        <Stack
-                          direction="row"
-                          flexWrap="wrap"
-                          gap={0.8}
-                          sx={{ mb: 2 }}
-                        >
-                          {proj.tech.map((t) => (
-                            <TechChip key={t} label={t} />
-                          ))}
-                        </Stack>
-                        <Stack direction="row" spacing={1}>
-                          {proj.url && (
-                            <Button
+                          >
+                            {proj.year || "2024"}
+                          </Typography>
+                          {proj.highlight && (
+                            <Chip
+                              label="Featured"
                               size="small"
-                              variant="contained"
-                              href={proj.url}
-                              target="_blank"
                               sx={{
-                                bgcolor: ACCENT,
-                                color: "#fff",
-                                borderRadius: 6,
-                                "&:hover": { bgcolor: ACCENT2 },
+                                mt: 0.5,
+                                bgcolor: alpha(GOLD, 0.15),
+                                color: "#8B6914",
+                                fontWeight: 700,
                               }}
-                            >
-                              {t.projects?.visit ?? "Visit"}
-                            </Button>
+                            />
                           )}
-                          {proj.github && (
-                            <Button
-                              size="small"
-                              variant="outlined"
-                              href={proj.github}
-                              target="_blank"
-                              sx={{
-                                color: ACCENT,
-                                borderColor: alpha(ACCENT, 0.3),
-                                borderRadius: 6,
-                                "&:hover": { borderColor: ACCENT },
-                              }}
-                            >
-                              GitHub
-                            </Button>
-                          )}
-                        </Stack>
-                      </Card>
-                    </Grid>
+                        </Grid>
+                        <Grid item xs={12} sm={9}>
+                          <Typography
+                            variant="h6"
+                            sx={{ color: ACCENT, fontSize: "1rem", mb: 0.5 }}
+                          >
+                            {proj.name}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              color: "text.secondary",
+                              fontSize: "0.85rem",
+                              lineHeight: 1.7,
+                              mb: 1,
+                            }}
+                          >
+                            {proj.desc[lang]}
+                          </Typography>
+                          <Stack
+                            direction="row"
+                            flexWrap="wrap"
+                            gap={0.8}
+                            sx={{ mb: 1.5 }}
+                          >
+                            {proj.tech.map((t) => (
+                              <TechChip key={t} label={t} />
+                            ))}
+                          </Stack>
+                          <Stack direction="row" spacing={1}>
+                            {proj.url && (
+                              <Button
+                                size="small"
+                                variant="contained"
+                                href={proj.url}
+                                target="_blank"
+                                sx={{
+                                  bgcolor: ACCENT,
+                                  color: "#fff",
+                                  borderRadius: 6,
+                                  "&:hover": { bgcolor: ACCENT2 },
+                                }}
+                              >
+                                {t.projects?.visit ?? "Visit"}
+                              </Button>
+                            )}
+                            {proj.github && (
+                              <Button
+                                size="small"
+                                variant="outlined"
+                                href={proj.github}
+                                target="_blank"
+                                sx={{
+                                  color: ACCENT,
+                                  borderColor: alpha(ACCENT, 0.3),
+                                  borderRadius: 6,
+                                  "&:hover": { borderColor: ACCENT },
+                                }}
+                              >
+                                GitHub
+                              </Button>
+                            )}
+                          </Stack>
+                        </Grid>
+                      </Grid>
+                    </Card>
                   ))}
-                </Grid>
+                </Stack>
               </Container>
             </Box>
 
@@ -1207,7 +1162,7 @@ export default function Content({ children }) {
                 <SectionTitle>{t.education.title}</SectionTitle>
                 <Stack spacing={3}>
                   {educationData.map((edu, i) => (
-                    <Card key={i} sx={{ p: 3 }}>
+                    <Card key={i} sx={{ p: 3, height: "100%" }}>
                       <Grid container spacing={2} alignItems="flex-start">
                         <Grid item xs={12} sm={3}>
                           <Typography
@@ -1280,86 +1235,71 @@ export default function Content({ children }) {
             <Box id="articles" sx={{ ...sectionSx, ...altBg }}>
               <Container maxWidth="lg">
                 <SectionTitle>{t.articles.title}</SectionTitle>
-                <Grid container spacing={3}>
+                <Stack spacing={3}>
                   {articlesData.map((article, i) => (
-                    <Grid item xs={12} md={4} key={i}>
-                      <Card
-                        sx={{
-                          p: 3,
-                          height: "100%",
-                          display: "flex",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <Stack
-                          direction="row"
-                          justifyContent="space-between"
-                          alignItems="center"
-                          sx={{ mb: 2 }}
-                        >
+                    <Card key={i} sx={{ p: 3, height: "100%" }}>
+                      <Grid container spacing={2} alignItems="flex-start">
+                        <Grid item xs={12} sm={3}>
+                          <Typography
+                            sx={{
+                              fontFamily: "'DM Mono',monospace",
+                              fontSize: "0.8rem",
+                              color: GOLD,
+                              fontWeight: 600,
+                            }}
+                          >
+                            {article.date}
+                          </Typography>
                           <Chip
                             label={article.tag}
                             size="small"
                             sx={{
+                              mt: 0.5,
                               bgcolor: alpha(ACCENT, 0.07),
                               color: ACCENT,
                               fontFamily: "'DM Mono',monospace",
                               fontWeight: 600,
                             }}
                           />
+                        </Grid>
+                        <Grid item xs={12} sm={9}>
+                          <Typography
+                            variant="h6"
+                            sx={{ color: ACCENT, fontSize: "1rem", mb: 0.5 }}
+                          >
+                            {article.title[lang]}
+                          </Typography>
                           <Typography
                             sx={{
-                              fontFamily: "'DM Mono',monospace",
-                              fontSize: "0.75rem",
                               color: "text.secondary",
+                              fontSize: "0.85rem",
+                              lineHeight: 1.7,
+                              mb: 1,
                             }}
                           >
-                            {article.date}
+                            {article.excerpt[lang]}
                           </Typography>
-                        </Stack>
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            color: ACCENT,
-                            fontSize: "1rem",
-                            mb: 1.5,
-                            lineHeight: 1.4,
-                            flex: 1,
-                          }}
-                        >
-                          {article.title[lang]}
-                        </Typography>
-                        <Typography
-                          sx={{
-                            color: "text.secondary",
-                            fontSize: "0.88rem",
-                            lineHeight: 1.7,
-                            mb: 2,
-                          }}
-                        >
-                          {article.excerpt[lang]}
-                        </Typography>
-                        <Button
-                          size="small"
-                          variant="text"
-                          href={article.url}
-                          sx={{
-                            alignSelf: "flex-start",
-                            color: GOLD,
-                            fontWeight: 700,
-                            p: 0,
-                            "&:hover": {
-                              bgcolor: "transparent",
-                              color: ACCENT,
-                            },
-                          }}
-                        >
-                          {t.articles.readMore} →
-                        </Button>
-                      </Card>
-                    </Grid>
+                          <Button
+                            size="small"
+                            variant="text"
+                            href={article.url}
+                            sx={{
+                              color: GOLD,
+                              fontWeight: 700,
+                              p: 0,
+                              "&:hover": {
+                                bgcolor: "transparent",
+                                color: ACCENT,
+                              },
+                            }}
+                          >
+                            {t.articles.readMore} →
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </Card>
                   ))}
-                </Grid>
+                </Stack>
               </Container>
             </Box>
 
